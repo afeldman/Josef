@@ -1,6 +1,2 @@
-bin/
-*.swp
-vendor/
-robot.ini
-src/includes/kunit.h.kl
-src/includes/strlib.h.kl
+*~
+.*~

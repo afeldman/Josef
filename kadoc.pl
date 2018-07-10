@@ -40,7 +40,7 @@ sub main {
 	    # Now we go backwards, nabbing the comments as we go
 	    for( my $n = $i - 1; $n > 0; $n-- ) {
 		if( $lines[$n] =~ /--[\w\d\s\t]*/ ) {
-		    # Becase we're now reading backwards,
+		    # Because we're now reading backwards,
 		    # we need to prepend
 		    $comments = lineToHtml( $lines[$n] ) . $comments;
 		} else {
