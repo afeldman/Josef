@@ -54,7 +54,7 @@ sub main {
 	    $comments = $pStyle . $comments . "</p>\n";
 	    $body .= $comments;
 	}
-    }
+    } #elsif ( $line =~ /^program ([\d\w_-]+)$/i ) {}
     $body .= "\n\n";
     print bodyToHtml( $body );
     exit( 0 );
