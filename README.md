@@ -1,5 +1,6 @@
-# kadoc
-KADOC is a very basic FANUC KAREL document generator. 
+# Josef
+Josef Capek is the brother of Karel Capek. This Projekt is named after him.
+Josef, the program, is a very basic FANUC KAREL document generator. 
 For the moment it reads in a karel file search for the routine key word and builds a documentation from the upper documentation of
 this routine.
 In furture more functions should be included. the current version only scans for the @return and @param tag. 
