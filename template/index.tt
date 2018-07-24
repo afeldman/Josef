@@ -1,0 +1,79 @@
+<html>
+  <head>
+    <title>[% title %]</title>
+  </head>
+  <body style="font-family:sans-serif;">
+
+    <h1>
+      [% title %]
+    </h1>
+
+    <dev>
+      [% license %]
+    </dev>
+    
+    <dev class="author">
+      <ul>
+	[% FOREACH author IN authors %]
+	<li>
+	  author
+	</li>
+	[% END %]
+      </ul>
+    </dev>
+
+    <dev class="todo">
+      <ul>
+	[% FOREACH todo IN todos %]
+	<li>
+	  todo
+	</li>
+	[% END %]
+      </ul>
+    </dev>
+    
+    <h2 style="margin:0px; padding:0px; display:inline; font-size:1.2em; color:#444;">
+      <ul>
+	[% FOREACH routine IN routines %]
+	<li>
+	  <p><u>
+	      [% routine.brief %]
+	  </u></p>
+	  <p>
+	    [% routine.description %]
+	  </p>
+	  
+	  [% FOREACH param IN routines.params %]
+	  <br/>
+	  <span style="display:block; color:#499;">
+	    <strong>
+	      &#64;param
+	    </strong>
+	  </span>
+	  <span style="color:#949; font-style:italic;">
+	    [% param %]
+	  </span>  
+	  [% END %]
+
+	  <br/>
+	  <span style="display:block; color:#494; margin-top:10px;">
+	    <strong>
+	      &#64;return
+	    </strong>
+	  </span>
+	  <span style="color:#949; font-style:italic;">
+	    [% routine.return %]
+	  </span> 
+	</li>
+	[% END %]
+      </ul>
+    </h2>
+    
+
+    <div class="copyright">
+      &copy; [% copyright %] [% date %] [% first_author%]
+    </div>
+    
+  </body>
+  
+</html>
