@@ -1,14 +1,16 @@
+<!DOCTYPE html/>
 <html>
   <head>
     <title>[% title %]</title>
   </head>
   <body style="font-family:sans-serif;">
 
-    <h1>
-      [% title %]
-    </h1>
-
-    <dev>
+    <!-- program -->
+    <dev class="comment">
+      [% comment %]
+    </dev>
+    
+    <dev class "license">
       [% license %]
     </dev>
     
@@ -31,15 +33,20 @@
 	[% END %]
       </ul>
     </dev>
+
+
+    <!-- routine -->
     
-    <h2 style="margin:0px; padding:0px; display:inline; font-size:1.2em; color:#444;">
       <ul>
 	[% FOREACH routine IN routines %]
 	<li>
-	  <p><u>
+	  <h2 style="margin:0px; padding:0px; display:inline; font-size:1.2em; color:#444;">
+	    [% routine.name %]
+	  </h2>
+	  <p><u><strong>
 	      [% routine.brief %]
-	  </u></p>
-	  <p>
+	  </strong></u></p>
+	  <p style=\"display:block; background-color:#eee; margin:0px; padding:5px; border:1px dashed #aaa; width:90%; font-size:9pt;">
 	    [% routine.description %]
 	  </p>
 	  
@@ -67,7 +74,6 @@
 	</li>
 	[% END %]
       </ul>
-    </h2>
     
 
     <div class="copyright">
