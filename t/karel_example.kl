@@ -8,11 +8,11 @@
 --
  -- @author Anton Feldmann
 -- @author Dr. Feldmann
---
+   --
 -- @date 01 aug 2018
 -- @license MIT
 -- @todo all :)
--- @todo nothing :(
+ -- @todo nothing :(
 --
 PROGRAM testporgram
 -- %NOLOCKGROUP is required to run KAREL from browser
@@ -26,7 +26,7 @@ PROGRAM testporgram
 -- @date 1 aug 2018
 --
 -- @return INTEGER
--- @param INTEGER the left part of the term
+-- @param INTEGER
 -- @param INTEGER the right part of the term
 ROUTINE add_int(l :INTEGER; r :INTEGER) :INTEGER
 BEGIN
