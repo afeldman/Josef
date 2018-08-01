@@ -10,7 +10,19 @@ use Data::Dumper;
 use Exporter qw( import );
 our @EXPORT_OK = qw( routine );
 
-sub parse_brief{}
+sub parse_brief{
+    my $line = @_[0]
+    if ( $line =~ /^\@brief[\t\s]*([\w\s\t\d]*)/i){
+        if ( $1 ) {
+            $brief = $1
+        }else{
+            $brief = "brief without description?"
+        }
+    }
+
+    return $line
+}
+
 sub parse_author{}
 sub parse_date{}
 
@@ -44,18 +56,33 @@ sub routine {
 
             push @params, \%param_tmp;
 
-        }elsif ( $line =~ /^\@return/ ){
-            say " ";
+        } elsif ( $line =~ /^\@return[\t\s]*([string|integer|array|boolean|byte|real]+)([\w\s\t\d]*)/i ){
+            if ( !$1 ){
+                $ret = {"datatype", "", "datavalue", "no return ratatype!"};
+            }else {
+                if ( $2 ){
+                    $ret = {"datatype", $1, "datavalue", $2};
+                }else {
+                    $ret = {"datatype", $1, "datavalue", ""};
+                }
+            }
+        } elsif ( $line =~ /^\@brief/i){
+            $brief = parse_brief($line);
+            say $brief
+        } elsif {
+
+        } else {
+
         }
 
     }
 
-    for my $elem (@params){
-        for my $key ( keys %$elem ){
-            my $value = %$elem{$key};
-            say "$key has value: $value";
-        }
-    }
+    #   for my $elem (@params){
+    #       for my $key ( keys %$elem ){
+    #           my $value = %$elem{$key};
+    #           say "$key has value: $value";
+    #       }
+    #   }
 
     my %routine_hash = (
         "title"       => $title,
@@ -65,7 +92,7 @@ sub routine {
         "date"        => $date,
         "params"      => @params,
         "authors"     => @authors,
-    );
+        );
 
     return \%routine_hash;
 }
