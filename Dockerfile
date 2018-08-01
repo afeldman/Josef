@@ -4,7 +4,8 @@ ARG JOSEF-VERSION
 
 RUN apk add --update --no-cache \
     perl \
-    perl-template-toolkit
+    perl-template-toolkit \
+    unzip
 
 RUN mkdir -p /kadoc
 WORKDIR /kadoc
