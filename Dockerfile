@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-ARG JOSEF-VERSION 0.0.1
+ARG JOSEF-VERSION
 
 RUN apk add --update --no-cache \
     perl \
