@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-ARG JOSEF-VERSION
+ARG JOSEF-VERSION=0.0.1
 
 RUN apk add --update --no-cache \
     perl \
@@ -10,7 +10,7 @@ RUN apk add --update --no-cache \
 RUN mkdir -p /kadoc
 WORKDIR /kadoc
 
-COPY ./release/josef-${JOSEF-VERSION}.zip /kadoc
+COPY ./release/josef-$JOSEF-VERSION.zip /kadoc
 RUN unzip /kadoc/josef.zip \
     && perl Makefile.PL \
     && make \
