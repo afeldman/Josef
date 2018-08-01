@@ -68,7 +68,7 @@ sub routine {
             }
         } elsif ( $line =~ /^\@brief/i){
             $brief = parse_brief($line);
-            say $brief
+            say $brief;
         } elsif {
 
         } else {
