@@ -1,30 +1,59 @@
 <!DOCTYPE html/>
 <html>
   <head>
-    <title>[% title %]</title>
+    [% IF file_name %]
+    <title>[% file_name %]</title>
+    [% END %]
   </head>
   <body style="font-family:sans-serif;">
-
     <!-- program -->
-    <dev class="comment">
-      [% comment %]
-    </dev>
-    
-    <dev class "license">
-      [% license %]
-    </dev>
-    
-    <dev class="author">
+    [% IF title %]
+    <h1 class="title">
+      [% title %]
+    </h1>
+    [% END %]
+
+    [% IF comment && brief %]
+    <div>
+      <details>
+        <summery class="summery">
+          [% brief %]
+        </summery>
+        <p class="comment">
+          [% comment %]
+        </p>
+      </details>
+    </div>
+    [% ELSE %]
+    <div>
+        <p class="comment">
+          [% brief %] [% comment %]
+        </p>
+    </div>
+    [% END %]
+
+    [% IF license %]
+    <p class "license">
+      <b>License:</b> [% license %]
+    </p>
+    [% END %]
+
+    [% IF authors && authors.size %]
+    <p class="author">
+      <b><u>Authors:</u></b>
       <ul>
 	[% FOREACH author IN authors %]
 	<li>
-	  author
+	   <b> [% author %] </b>
 	</li>
 	[% END %]
       </ul>
-    </dev>
+    </p>
+    [% END %]
 
+    [% IF todos && todos.size %]
     <dev class="todo">
+      <b><u>Todos:</u></b>
       <ul>
 	[% FOREACH todo IN todos %]
 	<li>
@@ -33,53 +62,75 @@
 	[% END %]
       </ul>
     </dev>
-
+    [% END %]
 
     <!-- routine -->
-    
-      <ul>
-	[% FOREACH routine IN routines %]
-	<li>
-	  <h2 style="margin:0px; padding:0px; display:inline; font-size:1.2em; color:#444;">
-	    [% routine.name %]
-	  </h2>
-	  <p><u><strong>
-	      [% routine.brief %]
-	  </strong></u></p>
-	  <p style=\"display:block; background-color:#eee; margin:0px; padding:5px; border:1px dashed #aaa; width:90%; font-size:9pt;">
-	    [% routine.description %]
-	  </p>
-	  
-	  [% FOREACH param IN routines.params %]
-	  <br/>
-	  <span style="display:block; color:#499;">
-	    <strong>
-	      &#64;param
-	    </strong>
-	  </span>
-	  <span style="color:#949; font-style:italic;">
-	    [% param %]
-	  </span>  
-	  [% END %]
 
-	  <br/>
-	  <span style="display:block; color:#494; margin-top:10px;">
-	    <strong>
-	      &#64;return
-	    </strong>
-	  </span>
-	  <span style="color:#949; font-style:italic;">
-	    [% routine.return %]
-	  </span> 
-	</li>
-	[% END %]
-      </ul>
-    
+    [% IF routines && routines.size %]
+    <p class="routines">
+      <b><u>Routines:</u></b>
+    </p>
+    <ul>
+      [% FOREACH routine IN routines %]
+      <li>
+	<h2 class="routinetile">
+          <!-- style="margin:0px; padding:0px; display:inline; font-size:1.2em; color:#444;"-->
+	  [% routine.title %]
+	</h2>
+
+        [% IF routine.brief && routine.description %]
+          <details>
+            <summery class="routinebrief">
+	      [% routine.brief %]
+            </summery>
+	    <p class="routinedesc">
+              <!-- style=\"display:block; background-color:#eee; margin:0px; padding:5px; border:1px dashed #aaa; width:90%; font-size:9pt;"-- >
+	        [% routine.description %]
+	    </p>
+          </details>
+          [% ELSE %]
+             <p class="routinedesc">
+              <!-- style=\"display:block; background-color:#eee; margin:0px; padding:5px; border:1px dashed #aaa; width:90%; font-size:9pt;"-- >
+	        [% routine.brief %] [% routine.description %]
+	    </p>
+          [% END %]
+
+        <!-- parameters -->
+        [% IF routine.params && routine.params.size %]
+	[% FOREACH param IN routine.params %]
+	<br/>
+	<span style="display:block; color:#499;">
+	  <strong>
+	    &#64;[% param.datatype %]
+	  </strong>
+	</span>
+	<span style="color:#949; font-style:italic;">
+	  [% param.datavalue %]
+	</span>
+	[% END %] <!-- routine parameters -->
+        [% END %] <!-- parameters are set -->
+
+        [% IF routine.ret.datatype || routine.ret.datavalue %]
+	<br/>
+	<span style="display:block; color:#494; margin-top:10px;">
+	  <strong>
+	    &#64;return
+	  </strong>
+	</span>
+	<span style="color:#949; font-style:italic;">
+	  [% routine.ret.datatype %] [% routine.ret.datavalue %]
+	</span>
+      </li>
+      [% END %] <!-- routine return end -->
+      [% END %] <!-- end for each routine -->
+    </ul>
+    [% END %] <!-- end of routine loop -->
+
 
     <div class="copyright">
-      &copy; [% copyright %] [% date %] [% first_author%]
+      &copy; <b>[% copyright %]</b> <i>[% date %]<i> [% first_author %]
     </div>
-    
+
   </body>
-  
+
 </html>

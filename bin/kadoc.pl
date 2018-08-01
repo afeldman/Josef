@@ -79,7 +79,7 @@ for ( my $i = 0; $i < scalar( @lines ); $i++ )
                 $n = 0;
             }
         }
-        push @routines, Doc::Kadoc::Josef::routine ( $routine_name, $comments);
+        push @routines, Doc::Kadoc::Josef::routine( $routine_name, $comments);
     }
     # find the program tag
     if ( $line =~ /^program ([\d\w]+)/i ){
@@ -109,9 +109,42 @@ my %ttopt = (INCLUDE_PATH => './template',
 
 my $tt = Template->new(\%ttopt);
 
+my @prog_authors = @{ $program{"authors"} };
+my @prog_todos = @{ $program{"todos"} };
+my @ttroutines;
+
+## build routine
+for (my $i = 0; $i <= $#routines; $i++) {
+    my %tmp = %{ $routines[$i] };
+    my %tmp_ret = %{ $tmp{"return"} };
+    my @tmp_authors = @{ $tmp{"authors"} };
+    my @tmp_todo = @{ $tmp{"todos"} };
+    my @tmp_params = @{ $tmp{"params"} };
+
+    push @ttroutines, {
+        title => $tmp{"title"},
+        brief => $tmp{"brief"},
+        description => $tmp{"discription"},
+        date => $tmp{"date"},
+        ret => { datatype => $tmp_ret{"datatype"},
+                 datavalue => $tmp_ret{"datavalue"}, },
+        authors => \@tmp_authors,
+        params => \@tmp_params,
+        todos => \@tmp_todo,
+    };
+}
+
 my %ttvars = (
-    title   => $program{"title"},
-    comment => $program{"discription"},
-    license => $program{"license"},);
+    title        => $program{"title"},
+    brief        => $program{"brief"},
+    todos        => \@prog_todos,
+    comment      => $program{"discription"},
+    license      => $program{"license"},
+    file_name    => $program{"filename"},
+    authors      => \@prog_authors,
+    copyright    => $program{"copyright"},
+    date         => $program{"date"},
+    first_author => $prog_authors[0],
+    routines     => \@ttroutines,);
 
 $tt->process("index.tt", \%ttvars) or die $tt->error;

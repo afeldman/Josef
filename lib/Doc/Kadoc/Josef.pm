@@ -47,7 +47,6 @@ sub parse_date{
 sub parse_author{
     my $line = $_[0];
     $line =~ s/\@author[\t\s]*//i;
-
     return $line;
 }
 
@@ -64,9 +63,9 @@ sub routine {
     my $brief   = '';
     my $desc    = '';
     my $date    = '';# change to date
-    my @authors = [];
-    my @params  = [];
-    my @todos   = [];
+    my @authors;
+    my @params;
+    my @todos;
     my %ret     = ("datatype" => "",
                    "datavalue" => "",);
 
@@ -77,13 +76,13 @@ sub routine {
     {
 
         if ( $line =~ /^\@param[\t\s]*([string|integer|array|boolean|byte|real]+)([\w\s\t\d]*)/i ){
-            my %param_tmp = ("datatype" => "",
-                             "datavalue" => "",);
+            my %param_tmp = (datatype => "",
+                             datavalue => "",);
             if ( $1 ) {
-                $param_tmp{"datatype"} = $1;
+                $param_tmp{datatype} = $1;
             }
             if ( $2 ) {
-                $param_tmp{"datavalue"} = $2;
+                $param_tmp{datavalue} = $2;
             }
 
             push @params, \%param_tmp;
@@ -115,16 +114,16 @@ sub routine {
 
     }
 
-    return (
+    return {
         "title"       => $title,
         "brief"       => $brief,
         "discription" => $desc,
-        "return"      => %ret,
+        "return"      => \%ret,
         "date"        => $date,
-        "params"      => @params,
-        "authors"     => @authors,
-        "todos"       => @todos,
-        );
+        "params"      => \@params,
+        "authors"     => \@authors,
+        "todos"       => \@todos,
+        };
 }
 
 sub program {
@@ -136,8 +135,8 @@ sub program {
     my $license   = '';
     my $file_name = '';
     my $copyright = '';
-    my @authors   = [];
-    my @todos     = [];
+    my @authors;
+    my @todos;
 
     $comment = normaize_text($comment);
     my @form_comment = split /\n/, $comment;
@@ -155,7 +154,7 @@ sub program {
             $file_name = $line;
         } elsif ( $line =~ /^\@copyright/i) {
             $line =~ s/\@copyright[\t\s]*//i;
-            $file_name = $line;
+            $copyright = $line;
         } elsif ( $line =~ /\@todo/i) {
             push @todos, parse_todo($line);
         } elsif ( $line =~ /^\@license/i) {
@@ -172,8 +171,9 @@ sub program {
         "discription" => $desc,
         "date"        => $date,
         "license"     => $license,
-        "authors"     => @authors,
-        "todos"       => @todos,
+        "filename"     => $file_name,
+        "authors"     => \@authors,
+        "todos"       => \@todos,
         "copyright"   => $copyright,
         );
 }
