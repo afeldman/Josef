@@ -10,12 +10,12 @@ I want to split the KAREL file into parts and then I want to write a perl module
 | --- | --- |
 | @file | The File name |
 | @copyright | The copy right information |
-| @todo | list of all future extentions |
-| @author | list of all the authors |
+| @todo | on todo task at a time. but this can used mutible time |
+| @author | one author but this can used mutiple times |
 | @date | date of the last change|
 | @license | the license terms |
 | @brief | one line description |
-| @return | return value |
+| @return | return value of the routine |
 | @param | parameter for the routine. The syntax is TYPE DESCRIPTION|
-| @see | a Anker to structure in this KAREL file. |
+
 

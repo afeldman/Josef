@@ -1,9 +1,18 @@
 FROM alpine:latest
 
-RUN apk add --update --no-cache perl
-#&& rm -rf /var/cache/apk/*
+ARG JOSEF-VERSION 0.0.1
 
-COPY ./kadoc.pl /usr/bin/kadoc
-RUN chmod 111 /usr/bin/kadoc
+RUN apk add --update --no-cache \
+    perl \
+    perl-template-toolkit
 
-ENTRYPOINT ["/usr/bin/kadoc"]
+RUN mkdir -p /kadoc
+WORKDIR /kadoc
+
+COPY ./release/josef-${JOSEF-VERSION}.zip /kadoc
+RUN unzip /kadoc/josef.zip \
+    && perl Makefile.PL \
+    && make \
+    && make install
+
+ENTRYPOINT ["/kadoc/bin/kadoc.pl"]
