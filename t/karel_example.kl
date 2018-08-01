@@ -9,7 +9,7 @@
  -- @author Anton Feldmann
 -- @author Dr. Feldmann
    --
--- @date 01 aug 2018
+-- @date 01 jan 2018
 -- @license MIT
 -- @todo all :)
  -- @todo nothing :(
@@ -23,7 +23,7 @@ PROGRAM testporgram
 -- this program add two integers and <u>return</u> a integer
 --
 -- @author Anton Feldmann
--- @date 1 aug 2018
+-- @date 01 jan 2018
 --
 -- @return INTEGER
 -- @param INTEGER

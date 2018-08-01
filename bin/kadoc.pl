@@ -6,6 +6,8 @@ use Doc::Kadoc::Josef;
 use strict;
 use warnings;
 use 5.010;
+use Data::Dumper;
+
 use Getopt::Std;
 $Getopt::Std::STANDARD_HELP_VERSION = 1;
 
@@ -49,6 +51,9 @@ my @lines = <FILE>;
 # close the file
 close( FILE );
 
+my @routines;
+my %program;
+
 # go through each line
 for ( my $i = 0; $i < scalar( @lines ); $i++ )
 {
@@ -74,12 +79,20 @@ for ( my $i = 0; $i < scalar( @lines ); $i++ )
                 $n = 0;
             }
         }
-        Doc::Kadoc::Josef::routine ( $routine_name, $comments)
+        my %routine = Doc::Kadoc::Josef::routine ( $routine_name, $comments);
+
+        for my $key (keys %routine){
+            if ( !$key ){
+                next;
+            }
+            my $value = $routine{$key};
+            say "$key has value: $value";
+        }
+        push @routines, Doc::Kadoc::Josef::routine ( $routine_name, $comments);
     }
     # find the program tag
     if ( $line =~ /^program ([\d\w]+)/i ){
         my $program_name = $1;
-
         my $comments = '';
         for( my $n = $i - 1; $n >= 0; $n-- ) {
             if( $lines[$n] =~ /\-\-[\w\d\s\t]*/ ) {
@@ -91,7 +104,21 @@ for ( my $i = 0; $i < scalar( @lines ); $i++ )
                 $n = 0;
             }
         }
-        #say $comments;
+        %program = Doc::Kadoc::Josef::program ( $program_name, $comments);
+
+        for my $key (keys %program){
+            if ( !$key ){
+                next;
+            }
+            my $value = $program{$key};
+            say "$key has value: $value";
+        }
     }
 
 }
+
+
+# after having colleectred all data
+use Template;
+
+my $tt = Template->new;
