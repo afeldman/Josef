@@ -31,16 +31,18 @@ sub routine {
     {
 
         if ( $line =~ /^\@param[\t\s]*([string|integer|array|boolean|byte|real]+)([\w\s\t\d]*)/i ){
-            my %param_tmp;
-            $param_tmp{"datatype"} = $1
-            $param_tmp{"datavalue"} = $2
-            #push @{ $param_tmp{$_} }, $+{$_} for keys %+;
+            my %param_tmp = (
+                "datatype" => "",
+                "datavalue" => "",
+                );
+            if ( $1 ) {
+                $param_tmp{"datatype"} = $1;
+            }
+            if ( $2 ) {
+                $param_tmp{"datavalue"} = $2;
+            }
 
-            #push @params, \%param;
-
-            print Dumper \%param_tmp;
-
-            #say %param{'datatype'}
+            push @params, \%param_tmp;
 
         }elsif ( $line =~ /^\@return/ ){
             say " ";
@@ -48,12 +50,12 @@ sub routine {
 
     }
 
-    print Dumper @params;
-
-
-    #for my %elem (@params){
-    #    say %elem{"datatype"};
-    #}
+    for my $elem (@params){
+        for my $key ( keys %$elem ){
+            my $value = %$elem{$key};
+            say "$key has value: $value";
+        }
+    }
 
     my %routine_hash = (
         "title"       => $title,
