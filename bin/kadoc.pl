@@ -79,15 +79,6 @@ for ( my $i = 0; $i < scalar( @lines ); $i++ )
                 $n = 0;
             }
         }
-        my %routine = Doc::Kadoc::Josef::routine ( $routine_name, $comments);
-
-        for my $key (keys %routine){
-            if ( !$key ){
-                next;
-            }
-            my $value = $routine{$key};
-            say "$key has value: $value";
-        }
         push @routines, Doc::Kadoc::Josef::routine ( $routine_name, $comments);
     }
     # find the program tag
@@ -105,14 +96,6 @@ for ( my $i = 0; $i < scalar( @lines ); $i++ )
             }
         }
         %program = Doc::Kadoc::Josef::program ( $program_name, $comments);
-
-        for my $key (keys %program){
-            if ( !$key ){
-                next;
-            }
-            my $value = $program{$key};
-            say "$key has value: $value";
-        }
     }
 
 }
@@ -121,4 +104,14 @@ for ( my $i = 0; $i < scalar( @lines ); $i++ )
 # after having colleectred all data
 use Template;
 
-my $tt = Template->new;
+my %ttopt = (INCLUDE_PATH => './template',
+               OUTPUT_PATH  => './bin');
+
+my $tt = Template->new(\%ttopt);
+
+my %ttvars = (
+    title   => $program{"title"},
+    comment => $program{"discription"},
+    license => $program{"license"},);
+
+$tt->process("index.tt", \%ttvars) or die $tt->error;
