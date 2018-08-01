@@ -30,13 +30,15 @@ sub routine {
     for my $line (@form_comment)
     {
 
-        if ( $line =~ /^\@param[\t\s]*(?<datatype>[string|integer|array|boolean|byte|real]+)(?<datavalue>[\w\s\t\d]*)/i ){
+        if ( $line =~ /^\@param[\t\s]*([string|integer|array|boolean|byte|real]+)([\w\s\t\d]*)/i ){
             my %param_tmp;
+            $param_tmp{"datatype"} = $1
+            $param_tmp{"datavalue"} = $2
             #push @{ $param_tmp{$_} }, $+{$_} for keys %+;
 
             #push @params, \%param;
 
-            #print Dumper \%param;
+            print Dumper \%param_tmp;
 
             #say %param{'datatype'}
 
