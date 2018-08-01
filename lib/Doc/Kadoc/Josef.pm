@@ -11,16 +11,17 @@ use Exporter qw( import );
 our @EXPORT_OK = qw( routine );
 
 sub parse_brief{
-    my $line = @_[0]
+    my $line = @_[0];
+    my $brief = "";
     if ( $line =~ /^\@brief[\t\s]*([\w\s\t\d]*)/i){
         if ( $1 ) {
-            $brief = $1
+            $brief = $1;
         }else{
-            $brief = "brief without description?"
+            $brief = "brief without description?";
         }
     }
 
-    return $line
+    return $brief;
 }
 
 sub parse_author{}
