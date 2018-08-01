@@ -1,0 +1,38 @@
+-- @file KAREL_EXAMPLE.KL
+--
+-- @brief This file is a karel example
+--
+-- this <b>program</b> is a example and does not forfill any interesting work
+--
+-- @copyright ANTON FELDMANN
+--
+ -- @author Anton Feldmann
+-- @author Dr. Feldmann
+--
+-- @date 01 aug 2018
+-- @license MIT
+-- @todo all :)
+-- @todo nothing :(
+--
+PROGRAM testporgram
+-- %NOLOCKGROUP is required to run KAREL from browser
+%NOLOCKGROUP
+
+-- @brief this program does add two numbers
+--
+-- this program add two integers and <u>return</u> a integer
+--
+-- @author Anton Feldmann
+-- @date 1 aug 2018
+--
+-- @return INTEGER
+-- @param INTEGER the left part of the term
+-- @param INTEGER the right part of the term
+ROUTINE add_int(l :INTEGER; r :INTEGER) :INTEGER
+BEGIN
+  RETURN(l + r)
+END add_int
+
+BEGIN
+
+END testporgram

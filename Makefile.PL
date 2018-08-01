@@ -3,8 +3,8 @@ use ExtUtils::MakeMaker;
 # See lib/ExtUtils/MakeMaker.pm for details of how to influence
 # the contents of the Makefile that is written.
 my %MM_ARGS = (
-    NAME              => 'Doc::KADOC',
-    VERSION_FROM      => 'lib/Doc/KADOC/josef.pm', # finds $VERSION
+    NAME              => 'Doc::Kadoc',
+    VERSION_FROM      => 'lib/Doc/Kadoc.pm', # finds $VERSION
     PREREQ_PM         => {
 	'Template::Toolkit' => 2.24,
 	'Moose' => 2.2011,
@@ -12,7 +12,7 @@ my %MM_ARGS = (
     TEST_REQUIRES => {
       'Test::Spec'    => 0.53,
     },
-    ABSTRACT_FROM  => 'lib/Doc/KADOC/josef.pm', # retrieve abstract from module
+    ABSTRACT_FROM  => 'lib/Doc/Kadoc.pm', # retrieve abstract from module
     AUTHOR         => 'Anton Feldmann <anton.feldmann@gmail.com>',
     LICENSE => 'mit',
     META_MERGE        => {
