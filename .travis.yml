@@ -3,5 +3,4 @@ perl:
   - "5.26"
 before_install:
   - cpanm --quiet --installdeps --notest .
-  - perl Makefile.PL && make test
-  - make test
+  - perl Makefile.PL && make install
