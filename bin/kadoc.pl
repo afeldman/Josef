@@ -6,7 +6,6 @@ use Doc::Kadoc::Josef;
 use strict;
 use warnings;
 use 5.010;
-use Data::Dumper;
 
 use Getopt::Std;
 $Getopt::Std::STANDARD_HELP_VERSION = 1;
