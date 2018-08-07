@@ -9,7 +9,7 @@ use 5.010;
 #datatype string|integer|array|boolean|byte|real
 
 use Exporter qw( import );
-our @EXPORT_OK = qw( routine program );
+our @EXPORT_OK = qw( parser );
 
 sub normaize_text{
     my $comment = $_[0];
@@ -176,6 +176,60 @@ sub program {
         "todos"       => \@todos,
         "copyright"   => $copyright,
         );
+}
+
+sub parser{
+    my @lines = @_;
+
+    my @routines;
+    my %program;
+
+    # go through each line
+    for ( my $i = 0; $i < scalar( @lines ); $i++ ){
+        my $line = $lines[$i];
+
+        # remove all leading spaces
+        $line =~ s/^[\t\s]+//;
+
+        # remove mutiple inner spaces
+        $line =~ s/[\t\s]+/ /;
+
+        # find a routine documentation
+        if ( $line =~ /^routine ([\d\w]+)/i ){
+            my $routine_name = $1;
+            my $comments = '';
+            for( my $n = $i - 1; $n > 0; $n-- ) {
+                if( $lines[$n] =~ /\-\-[\w\d\s\t]*/ ) {
+                    # Becase we're now reading backwards,
+                    # we need to prepend
+                    $comments = $lines[$n] . $comments;
+                } else {
+                    # Exit and continue
+                    $n = 0;
+                }
+            }
+            push @routines, routine( $routine_name, $comments );
+        }
+        # find the program tag
+        if ( $line =~ /^program ([\d\w]+)/i ){
+            my $program_name = $1;
+            my $comments = '';
+            for( my $n = $i - 1; $n >= 0; $n-- ) {
+                if( $lines[$n] =~ /\-\-[\w\d\s\t]*/ ) {
+                    # Becase we're now reading backwards,
+                    # we need to prepend
+                    $comments = $lines[$n] . $comments;
+                } else {
+                    # Exit and continue
+                    $n = 0;
+                }
+            }
+            %program = program ( $program_name, $comments);
+        }
+
+    }
+
+    return (\@routines,\%program);
 }
 
 1;

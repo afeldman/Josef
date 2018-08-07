@@ -33,6 +33,21 @@ BEGIN
   RETURN(l + r)
 END add_int
 
+-- @brief this program does sub two numbers
+--
+-- this program sub two integers and <u>return</u> a integer
+--
+-- @author Anton Feldmann
+-- @date 01 jan 2018
+--
+-- @return INTEGER
+-- @param INTEGER
+-- @param INTEGER the right part of the term
+ROUTINE sub_int(l :INTEGER; r :INTEGER) :INTEGER
+BEGIN
+  RETURN(l - r)
+END sub_int
+
 BEGIN
 
 END testporgram

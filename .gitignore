@@ -6,6 +6,7 @@
 *.o
 *.pm.tdy
 *.bs
+*[Ddoc]*
 
 # Devel::Cover
 cover_db/

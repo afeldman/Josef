@@ -128,7 +128,7 @@
 
 
     <div class="copyright">
-      &copy; <b>[% copyright %]</b> <i>[% date %]<i> [% first_author %]
+      &copy; <b>[% copyright %]</b> <i>[% date %]</i> [% first_author %]
     </div>
 
   </body>

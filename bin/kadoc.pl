@@ -28,129 +28,82 @@ if ( $options{v} ){
     print "VERSION: ", $Doc::Kadoc::VERSION, "\n";
 }
 
-my $output_file = "";
+my $output_path;
 if ( $options{o} ) {
-    $output_file = $options{o};
+    $output_path = $options{o};
+} else {
+    use Cwd qw(cwd getcwd);
+    $output_path = getcwd;
 }
 
 my $inputfile = "";
 if( defined $ARGV[0]) {
     $inputfile = $ARGV[0];
-}else{
-    print "where is the input karel script!!!\n";
-    exit( 0 );
 }
 
 #
 # start building kadoc
+if($inputfile){
 
-# open the input file
-open FILE, $inputfile or die $!;
-# copy the lines into an array
-my @lines = <FILE>;
-# close the file
-close( FILE );
+    # open the input file
+    open FILE, $inputfile or die $!;
+    # copy the lines into an array
+    my @lines = <FILE>;
+    # close the file
+    close( FILE );
 
-my @routines;
-my %program;
+    my ($routine_tmp, $program_tmp) = Doc::Kadoc::Josef::parser(@lines);
 
-# go through each line
-for ( my $i = 0; $i < scalar( @lines ); $i++ )
-{
-    my $line = $lines[$i];
+    my @routines = @{$routine_tmp};
+    my %program = %{$program_tmp};
 
-    # remove all leading spaces
-    $line =~ s/^[\t\s]+//;
+    # after having colleectred all data
+    use Template;
 
-    # remove mutiple inner spaces
-    $line =~ s/[\t\s]+/ /;
+    my %ttopt = (INCLUDE_PATH => './template',
+                 OUTPUT_PATH  => $output_path);
 
-    # find a routine documentation
-    if ( $line =~ /^routine ([\d\w]+)/i ){
-        my $routine_name = $1;
-        my $comments = '';
-        for( my $n = $i - 1; $n > 0; $n-- ) {
-            if( $lines[$n] =~ /\-\-[\w\d\s\t]*/ ) {
-                # Becase we're now reading backwards,
-                # we need to prepend
-                $comments = $lines[$n] . $comments;
-            } else {
-                # Exit and continue
-                $n = 0;
-            }
-        }
-        push @routines, Doc::Kadoc::Josef::routine( $routine_name, $comments);
-    }
-    # find the program tag
-    if ( $line =~ /^program ([\d\w]+)/i ){
-        my $program_name = $1;
-        my $comments = '';
-        for( my $n = $i - 1; $n >= 0; $n-- ) {
-            if( $lines[$n] =~ /\-\-[\w\d\s\t]*/ ) {
-                # Becase we're now reading backwards,
-                # we need to prepend
-                $comments = $lines[$n] . $comments;
-            } else {
-                # Exit and continue
-                $n = 0;
-            }
-        }
-        %program = Doc::Kadoc::Josef::program ( $program_name, $comments);
+    my $tt = Template->new(\%ttopt);
+
+    my @prog_authors = @{ $program{"authors"} };
+    my @prog_todos = @{ $program{"todos"} };
+    my @ttroutines;
+
+    ## build routine
+    for (my $i = 0; $i <= $#routines; $i++) {
+        my %tmp = %{ $routines[$i] };
+        my %tmp_ret = %{ $tmp{"return"} };
+        my @tmp_authors = @{ $tmp{"authors"} };
+        my @tmp_todo = @{ $tmp{"todos"} };
+        my @tmp_params = @{ $tmp{"params"} };
+
+        push @ttroutines, {
+            title => $tmp{"title"},
+            brief => $tmp{"brief"},
+            description => $tmp{"discription"},
+            date => $tmp{"date"},
+            ret => { datatype => $tmp_ret{"datatype"},
+                     datavalue => $tmp_ret{"datavalue"}, },
+            authors => \@tmp_authors,
+            params => \@tmp_params,
+            todos => \@tmp_todo,
+        };
     }
 
-}
+    my %ttvars = (
+        title        => $program{"title"},
+        brief        => $program{"brief"},
+        todos        => \@prog_todos,
+        comment      => $program{"discription"},
+        license      => $program{"license"},
+        file_name    => $program{"filename"},
+        authors      => \@prog_authors,
+        copyright    => $program{"copyright"},
+        date         => $program{"date"},
+        first_author => $prog_authors[0],
+        routines     => \@ttroutines,);
 
 
-# after having colleectred all data
-use Template;
+    $tt->process("index.tt", \%ttvars, "index.html") or die $tt->error
 
-my %ttopt = (INCLUDE_PATH => './template',
-               OUTPUT_PATH  => './bin');
-
-my $tt = Template->new(\%ttopt);
-
-my @prog_authors = @{ $program{"authors"} };
-my @prog_todos = @{ $program{"todos"} };
-my @ttroutines;
-
-## build routine
-for (my $i = 0; $i <= $#routines; $i++) {
-    my %tmp = %{ $routines[$i] };
-    my %tmp_ret = %{ $tmp{"return"} };
-    my @tmp_authors = @{ $tmp{"authors"} };
-    my @tmp_todo = @{ $tmp{"todos"} };
-    my @tmp_params = @{ $tmp{"params"} };
-
-    push @ttroutines, {
-        title => $tmp{"title"},
-        brief => $tmp{"brief"},
-        description => $tmp{"discription"},
-        date => $tmp{"date"},
-        ret => { datatype => $tmp_ret{"datatype"},
-                 datavalue => $tmp_ret{"datavalue"}, },
-        authors => \@tmp_authors,
-        params => \@tmp_params,
-        todos => \@tmp_todo,
-    };
-}
-
-my %ttvars = (
-    title        => $program{"title"},
-    brief        => $program{"brief"},
-    todos        => \@prog_todos,
-    comment      => $program{"discription"},
-    license      => $program{"license"},
-    file_name    => $program{"filename"},
-    authors      => \@prog_authors,
-    copyright    => $program{"copyright"},
-    date         => $program{"date"},
-    first_author => $prog_authors[0],
-    routines     => \@ttroutines,);
-
-print $output_file;
-
-if (not defined $output_file || $output_file eq ''){
-    $tt->process("index.tt", \%ttvars) or die $tt->error;
-}else{
-    $tt->process("index.tt", \%ttvars, $output_file) or die $tt->error;
 }
