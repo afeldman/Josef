@@ -3,7 +3,7 @@ package Doc::Kadoc;
 use warnings;
 use strict;
 
-our $VERSION = '0.0.1';
+our $VERSION = '0.1.1';
 our $ABSTRACT = 'This module gives a handy function set to work with the karel documentation';
 our $AUTHOR = 'Anton Feldmann <anton.feldmann(at)gmail.com>';
 our $LICENSE = 'MIT License
