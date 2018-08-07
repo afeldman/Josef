@@ -147,4 +147,10 @@ my %ttvars = (
     first_author => $prog_authors[0],
     routines     => \@ttroutines,);
 
-$tt->process("index.tt", \%ttvars) or die $tt->error;
+print $output_file;
+
+if (not defined $output_file || $output_file eq ''){
+    $tt->process("index.tt", \%ttvars) or die $tt->error;
+}else{
+    $tt->process("index.tt", \%ttvars, $output_file) or die $tt->error;
+}
