@@ -7,7 +7,6 @@ my %MM_ARGS = (
     VERSION_FROM      => 'lib/Doc/Kadoc.pm', # finds $VERSION
     PREREQ_PM         => {
 	'Template::Toolkit' => 2.24,
-	'Moose' => 2.2011,
     },
     TEST_REQUIRES => {
       'Test::Spec'    => 0.53,
