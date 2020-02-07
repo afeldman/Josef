@@ -1,5 +1,10 @@
-use 5.008005;
+use strict;
+use warnings;
+use 5.008;
+use inc::Module::Install 1.00;
+
 use ExtUtils::MakeMaker;
+
 # See lib/ExtUtils/MakeMaker.pm for details of how to influence
 # the contents of the Makefile that is written.
 my %MM_ARGS = (
@@ -33,4 +38,9 @@ $MM_ARGS{BUILD_REQUIRES} = {%{$MM_ARGS{BUILD_REQUIRES}}, %{delete $MM_ARGS{TEST_
   if $eumm_version < 6.63_03;
 $MM_ARGS{PREREQ_PM} = {%{$MM_ARGS{PREREQ_PM}}, %{delete $MM_ARGS{BUILD_REQUIRES}}}
   if $eumm_version < 6.55_01;
+
+all_from 'lib/Doc/Kadoc.pm';
+
+install_script 'bin/kadoc.pl';
+
 WriteMakefile(%MM_ARGS);
