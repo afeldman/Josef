@@ -12,5 +12,5 @@ script:
   - make install
   - kadoc.pl -v
   - kadoc.pl -h
-  - kadoc.pl ./t/karel_example.kl -o /tmp/
+  - kadoc.pl -o /tmp/ ./t/karel_example.kl 
   - ls -la /tmp/

@@ -21,7 +21,9 @@ if ( $options{h} )
     print "KADOC is a Karel documentation generator.\n";
     print "Input a file\n";
     print "kadoc.pl <karelfilepath> -o output\n";
-    print "\n";
+    print "options:\n";
+    print "\t", $options;
+    print "\n\n";
 }
 
 if ( $options{v} ){
@@ -40,7 +42,8 @@ if ( $options{o} ) {
 }
 
 my $inputfile = "";
-if( defined $ARGV[0]) {
+if( defined $ARGV[0] ) {
+    print HEADER
     $inputfile = $ARGV[0];
     print "input file is: ", $inputfile; 
 }
