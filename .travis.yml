@@ -6,8 +6,7 @@ perl:
 before_install:
   - cpanm --quiet --installdeps --notest .
 script:
-  - perl Makefile.PL 
-  - ls -la 
+  - perl Makefile.PL
   - make 
   - make install
   - ./bin/kadoc.pl -v

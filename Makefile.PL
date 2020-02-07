@@ -3,7 +3,7 @@ use warnings;
 use 5.008;
 use inc::Module::Install 1.00;
 
-name 'Doc::Kadoc';
+name 'Kadoc';
 license 'mit';
 author 'Anton Feldmann <anton.feldmann@gmail.com>';
 requires 'perl' => '5.008';
