@@ -33,18 +33,15 @@ if ( $options{v} ){
 my $output_path;
 if ( $options{o} ) {
     $output_path = $options{o};
-    print "output file is: ", $output_path;
 } else {
     use Cwd qw(cwd getcwd);
     $output_path = getcwd;
-    print "the file is not set. Use: ", $output_path, "\n";
 }
 
 my $inputfile = "";
 if( defined $ARGV[0] ) {
     print HEADER;
     $inputfile = $ARGV[0];
-    print "input file is: ", $inputfile, "\n"; 
 }
 
 #
@@ -69,7 +66,8 @@ if($inputfile){
     print "start template system\n";
     # after having colleectred all data
     use Template;
-
+    
+    print "set: ", $output_path, "\n";
     my %ttopt = (INCLUDE_PATH => './template',
                  OUTPUT_PATH  => $output_path);
 
