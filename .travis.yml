@@ -5,4 +5,5 @@ perl:
   - "5.26"
 before_install:
   - cpanm --quiet --installdeps --notest .
-  - perl Makefile.PL && make test
+  - perl Makefile.PL PREFIX=./bin && make install
+  - ./bin/kadoc.pl -v
