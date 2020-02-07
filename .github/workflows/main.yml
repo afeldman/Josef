@@ -14,7 +14,7 @@ jobs:
     - name: check perl version
       run: perl --version
     - name: get cpanm
-      run: curl -L http://cpanmin.us | perl - App::cpanminus
+      run: curl -L http://cpanmin.us | sudo perl - App::cpanminus
     - name: install deps
       run: cpanm --quiet --installdeps --notest .
     - name: make makefile
