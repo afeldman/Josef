@@ -26,15 +26,17 @@ if ( $options{h} )
 
 if ( $options{v} ){
     print HEADER;
-    print "VERSION: ", $Doc::Kadoc::VERSION, "\n";
+    print "VERSION: ", $Doc::Kadoc::VERSION, "\n\n";
 }
 
 my $output_path;
 if ( $options{o} ) {
     $output_path = $options{o};
+    print "output file is: ", $output_path
 } else {
     use Cwd qw(cwd getcwd);
     $output_path = getcwd;
+    print "the file is not set. Use: ", $output_path
 }
 
 my $inputfile = "";
