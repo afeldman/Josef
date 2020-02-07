@@ -18,7 +18,9 @@ getopts("hvo:", \%options);
 if ( $options{h} )
 {
     print HEADER;
-    print "KADOC is a Karel documentation gernator.";
+    print "KADOC is a Karel documentation generator.";
+    print "Input a file";
+    print "kadoc.pl <karelfilepath> -o output";
     print "\n";
 }
 
