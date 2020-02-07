@@ -10,6 +10,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: install perl
-      run: sudo apt-get install
+      run: sudo apt-get install perl
     - name: make makefile
       run: perl Makefile.Pl
+    - name: make and install
+      run: make ; make install
+    - name: make small test
+      run: kadoc.pl -o /tmp/ ./t/karel_example.kl
