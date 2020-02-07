@@ -18,7 +18,7 @@ jobs:
     - name: get cpanm
       run: curl -L http://cpanmin.us | perl - --sudo App::cpanminus
     - name: install module
-      run: sudo cpan install inc::Module::Install
+      run: sudo cpanm inc::Module::Install
     - name: install deps
       run: sudo cpanm --quiet --installdeps --notest .
     - name: make makefile
