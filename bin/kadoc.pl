@@ -67,7 +67,7 @@ if($inputfile){
     # after having colleectred all data
     use Template;
     
-    print "set: ", $output_path, "\n";
+    print "set output path to: ", $output_path, "\n";
     my %ttopt = (INCLUDE_PATH => './template',
                  OUTPUT_PATH  => $output_path);
 
