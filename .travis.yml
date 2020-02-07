@@ -13,5 +13,4 @@ script:
   - kadoc.pl -v
   - kadoc.pl -h
   - kadoc.pl ./t/karel_example.kl -o /tmp/karel.html
-  - ls -la /tmp/karel.html 
-  
+  - ls -la /tmp/

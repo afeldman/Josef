@@ -170,7 +170,7 @@ sub program {
         "discription" => $desc,
         "date"        => $date,
         "license"     => $license,
-        "filename"     => $file_name,
+        "filename"    => $file_name,
         "authors"     => \@authors,
         "todos"       => \@todos,
         "copyright"   => $copyright,

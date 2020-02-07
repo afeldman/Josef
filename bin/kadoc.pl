@@ -18,9 +18,9 @@ getopts("hvo:", \%options);
 if ( $options{h} )
 {
     print HEADER;
-    print "KADOC is a Karel documentation generator.";
-    print "Input a file";
-    print "kadoc.pl <karelfilepath> -o output";
+    print "KADOC is a Karel documentation generator.\n";
+    print "Input a file\n";
+    print "kadoc.pl <karelfilepath> -o output\n";
     print "\n";
 }
 
@@ -40,6 +40,7 @@ if ( $options{o} ) {
 my $inputfile = "";
 if( defined $ARGV[0]) {
     $inputfile = $ARGV[0];
+    print "input file is: ", $inputfile; 
 }
 
 #
