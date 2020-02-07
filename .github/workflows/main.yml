@@ -1,0 +1,15 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: install perl
+      run: sudo apt-get install
+    - name: make makefile
+      run: perl Makefile.Pl
