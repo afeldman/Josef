@@ -1,0 +1,25 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: install perl
+      run: sudo apt-get install perl
+    - name: check perl version
+      run: perl --version
+    - name: get cpanm
+      run: curl -L http://cpanmin.us | sudo perl - App::cpanminus
+    - name: install deps
+      run: sudo cpanm --quiet --installdeps --notest .
+    - name: make makefile
+      run: perl Makefile.PL
+    - name: make and install
+      run: make ; sudo make install
+    - name: make small test
+      run: kadoc.pl -o /tmp/ ./t/karel_example.kl
