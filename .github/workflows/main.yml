@@ -12,7 +12,7 @@ jobs:
     - name: install perl
       run: sudo apt-get install perl
     - name: make makefile
-      run: perl Makefile.Pl
+      run: perl Makefile.PL
     - name: make and install
       run: make ; make install
     - name: make small test
