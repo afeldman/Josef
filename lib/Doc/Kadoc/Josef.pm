@@ -2,7 +2,6 @@ package Doc::Kadoc::Josef;
 
 use warnings;
 use strict;
-use 5.010;
 
 #todo: day time
 
