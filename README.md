@@ -18,4 +18,3 @@ I want to split the KAREL file into parts and then I want to write a perl module
 | @return | return value of the routine |
 | @param | parameter for the routine. The syntax is TYPE DESCRIPTION|
 
-

@@ -1,19 +1,19 @@
 FROM alpine:latest
 
-ARG JOSEF-VERSION=0.0.1
+ARG JOSEF-VERSION=0.1.1
 
 RUN apk add --update --no-cache \
     perl \
     perl-template-toolkit \
-    unzip
+    unzip \
+    git
 
 RUN mkdir -p /kadoc
 WORKDIR /kadoc
 
-COPY ./release/josef-$JOSEF-VERSION.zip /kadoc
-RUN unzip /kadoc/josef.zip \
-    && perl Makefile.PL \
+COPY git clone https://github.com/afeldman/Josef.git /kadoc
+RUN perl Makefile.PL \
     && make \
-    && make install
+    && make install 
 
-ENTRYPOINT ["/kadoc/bin/kadoc.pl"]
+ENTRYPOINT ["kadoc.pl"]
